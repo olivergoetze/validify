@@ -18,7 +18,7 @@ setuptools.setup(
     url='https://github.com/olivergoetze/lxmlschemavalidator',
     packages=setuptools.find_packages(),
     python_requires=">=3.5",
-    install_requires=['lxml'],
+    install_requires=['lxml', 'logzero'],
     classifiers=[
         # Trove classifiers
         # (https://pypi.python.org/pypi?%3Aaction=list_classifiers)

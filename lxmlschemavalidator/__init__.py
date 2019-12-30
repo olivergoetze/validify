@@ -2,5 +2,7 @@
 portion of the XML Schema 1.1 Definition. """
 
 from .lxmlschemavalidator import (
-  bootstrap_validation,
+  validate,
+  assess_element_structure,
+  compile_example_rules,
 )
