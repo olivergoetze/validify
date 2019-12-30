@@ -5,6 +5,7 @@ from logzero import logger
 import collections
 
 from lxmlschemavalidator.helpers.cleanup_compare_strings import get_compare_value
+from lxmlschemavalidator.helpers import normalize_space
 
 
 def assess_element_structure(element: etree.Element, xmlns_def: dict, validation_rules: dict, validation_messages: list) -> list:
@@ -47,10 +48,19 @@ def assess_element_structure(element: etree.Element, xmlns_def: dict, validation
 
         # max occurence
         if validation_rules[element_name]["max_occurence"] is not None:  # max occurence nur prüfen, wenn das Element nicht unbegrenzt auftreten kann
-            element_name_xpath = "{urn:isbn:1-931666-22-9}%s" % element_name
-            element_siblings = element.getparent().findall(element_name_xpath, namespaces=xmlns_def)
+            element_siblings = element.getparent().findall(element_name, namespaces=xmlns_def)
             if len(element_siblings) > validation_rules[element_name]["max_occurence"]:
                 validation_messages.append("Element {} ist {} mal vorhanden, erwartet wird jedoch nur {} Vorkommen.".format(element_name, len(element_siblings), validation_rules[element_name]["max_occurence"]))
+
+        # character content allowed
+        if validation_rules[element_name]["text_character_content_allowed"] is False:
+            if element.text is not None:
+                if element.text != "":
+                    validation_messages.append("Element {} should not contain text character content.".format(element_name))
+        if validation_rules[element_name]["tail_character_content_allowed"] is False:
+            if element.tail is not None:
+                if element.tail != "":
+                    validation_messages.append("Element {} should not contain tail character content.".format(element_name))
 
         # level occurence  # TODO: EAD-spezifisch --> entfernen
         c_parents = element.iterancestors(tag="{urn:isbn:1-931666-22-9}c", )
@@ -96,7 +106,9 @@ def compile_example_rules() -> dict:
                                                                              "{urn:isbn:1-931666-22-9}index"]
     validation_rules["{urn:isbn:1-931666-22-9}c"]["obligatory_subelements"] = []
     validation_rules["{urn:isbn:1-931666-22-9}c"][
-        "max_occurence"] = None  # maximal erwartetes Auftreten des Elements (None = unbegrenzt)
+        "max_occurence"] = 2  # maximal erwartetes Auftreten des Elements (None = unbegrenzt)
+    validation_rules["{urn:isbn:1-931666-22-9}c"]["text_character_content_allowed"] = False
+    validation_rules["{urn:isbn:1-931666-22-9}c"]["tail_character_content_allowed"] = False
     validation_rules["{urn:isbn:1-931666-22-9}c"]["level_occurence"] = ["collection", "class", "series",
                                                                         "subseries", "file", "item"]  # TODO: EAD-spezifisch --> generisch umsetzen (indem etwa eine Attributwert-Bedingung für das Auftreten festgelegt werden kann)
 
@@ -114,6 +126,7 @@ def validate(input_file: str, xmlns_def=None, validation_rules=None):
     xml_in = etree.parse(input_file)
     xml_elements = xml_in.findall("//{*}*")
     for xml_element in xml_elements:
+        normalize_space.parse_xml_content(xml_element)  # apply normalize-space so only actual character content is found
         assess_element_structure(xml_element, xmlns_def, validation_rules, validation_messages)
 
     # Aggregate and output validation messages

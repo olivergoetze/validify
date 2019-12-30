@@ -31,17 +31,21 @@
 			</repository>
 		</did>
 		<dsc>
-			<c level="collection" id="Identifier_des_Findbuchs">
+			<c level="collection" id="Identifier_des_Findbuchs" falsches_attribut="">
 				<did>
 					<unittitle>Bestandstitel</unittitle>
 				</did>
-				<c level="file" id="Identifier_der_Titelaufnahme">
+				<c level="file">
+				
 					<did>
 						<unitid>Archivaliensignatur</unitid>
 						<unittitle>Titel der Archivalie</unittitle>
-					</did>				
+					</did>
+					<falsches_subelement></falsches_subelement>	
 				</c>
-			</c>
+				<c></c>
+				<c>test</c>
+			</c>test
 		</dsc>
 	</archdesc>
 </ead>
