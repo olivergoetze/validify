@@ -123,11 +123,14 @@ def validate(input_file: str, xmlns_def=None, validation_rules=None):
         logger.warn("No validation rules defined; using example rules for validation.")
     validation_messages = []
 
-    xml_in = etree.parse(input_file)
-    xml_elements = xml_in.findall("//{*}*")
-    for xml_element in xml_elements:
-        normalize_space.parse_xml_content(xml_element)  # apply normalize-space so only actual character content is found
-        assess_element_structure(xml_element, xmlns_def, validation_rules, validation_messages)
+    try:
+        xml_in = etree.parse(input_file)
+        xml_elements = xml_in.findall("//{*}*")
+        for xml_element in xml_elements:
+            normalize_space.parse_xml_content(xml_element)  # apply normalize-space so only actual character content is found
+            assess_element_structure(xml_element, xmlns_def, validation_rules, validation_messages)
+    except etree.XMLSyntaxError:
+        logger.error("Input file {} is not a well-formed XML document.".format(input_file))
 
     # Aggregate and output validation messages
     if len(validation_messages) > 0:
