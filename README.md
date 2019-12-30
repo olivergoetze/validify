@@ -1,0 +1,1 @@
+lxmlschemavalidator is a lxml-based validator for assessing the structure of an xml tree, seeking to cover a good portion of the XML Schema 1.1 Definition.
