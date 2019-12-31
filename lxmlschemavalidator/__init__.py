@@ -5,4 +5,5 @@ from .lxmlschemavalidator import (
   validate,
   assess_element_structure,
   compile_example_rules,
+  get_message_by_id,
 )
