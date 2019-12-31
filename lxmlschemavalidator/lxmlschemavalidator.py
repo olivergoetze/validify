@@ -8,7 +8,7 @@ from lxmlschemavalidator.helpers.cleanup_compare_strings import get_compare_valu
 from lxmlschemavalidator.helpers import normalize_space
 
 
-def assess_element_structure(element: etree.Element, xmlns_def: dict, validation_rules: dict, validation_messages: list) -> list:
+def assess_element_structure(element: etree.Element, element_sourceline: int, xmlns_def: dict, validation_rules: dict, validation_messages: list) -> list:
     element_name = element.tag
     element_attributes = element.attrib
     element_subelements = [subelement.tag for subelement in element]
@@ -73,7 +73,7 @@ def assess_element_structure(element: etree.Element, xmlns_def: dict, validation
             break
 
 
-    return validation_messages
+    return validation_messages  # TODO: Weiteren Rückgabewert für weitere Verarbeitung implementieren (dict mit Meldungs-ID (Meldungen in externe Konkordanz auslagern), sourceline des Elements, Element-Kontext als String, ...?) - Mapping der Meldungs-IDs auf Kategorien sollte im DPT selbst über eine Konkordanz erfolgen.)
 
 
 def compile_example_rules() -> dict:
@@ -127,8 +127,9 @@ def validate(input_file: str, xmlns_def=None, validation_rules=None):
         xml_in = etree.parse(input_file)
         xml_elements = xml_in.findall("//{*}*")
         for xml_element in xml_elements:
+            xml_element_sourceline = xml_element.sourceline  # get original source line before applying normalize-space
             normalize_space.parse_xml_content(xml_element)  # apply normalize-space so only actual character content is found
-            assess_element_structure(xml_element, xmlns_def, validation_rules, validation_messages)
+            assess_element_structure(xml_element, xml_element_sourceline, xmlns_def, validation_rules, validation_messages)
     except etree.XMLSyntaxError:
         logger.error("Input file {} is not a well-formed XML document.".format(input_file))
 
