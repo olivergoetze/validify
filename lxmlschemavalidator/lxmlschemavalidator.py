@@ -91,6 +91,13 @@ def assess_element_structure(element: etree.Element, element_sourceline: int, xm
                 validation_messages.append("Element {} - direkter c-Parent besitzt kein level-Attribut.".format(element_name))
             break
 
+        # allowed values (xs:enumeration)
+        if len(validation_rules[element_name]["allowed_values"]) > 0:
+            if element.text is not None:
+                if element.text not in validation_rules[element_name]["allowed_values"]:
+                    validation_messages.append("{} -- Element value not eqal to required value: '{}' != '{}'".format(element_name, element.text, ", ".join(validation_rules[element_name]["allowed_values"])))
+
+
 
     return validation_results # TODO: Mapping der Meldungs-IDs auf Kategorien sollte im DPT selbst über eine Konkordanz erfolgen.)
 
