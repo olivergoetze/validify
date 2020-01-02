@@ -4,6 +4,9 @@ portion of the XML Schema 1.1 Definition. """
 from .lxmlschemavalidator import (
   validate,
   assess_element_structure,
-  compile_example_rules,
-  get_message_by_id,
+)
+
+from .helpers import (
+  examples,
+  messages,
 )
