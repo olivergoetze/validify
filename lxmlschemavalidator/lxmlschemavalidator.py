@@ -7,7 +7,7 @@ import collections
 from lxmlschemavalidator.helpers.cleanup_compare_strings import get_compare_value
 from lxmlschemavalidator.helpers import normalize_space
 from lxmlschemavalidator.helpers import messages
-from lxmlschemavalidator.helpers import rules
+from lxmlschemavalidator.helpers import examples
 
 
 def assess_element_structure(element: etree.Element, element_sourceline: int, xmlns_def: dict, validation_rules: dict, validation_messages: list, validation_results: list) -> list:
@@ -19,6 +19,8 @@ def assess_element_structure(element: etree.Element, element_sourceline: int, xm
     if element_name in validation_rules:
 
         for validation_rules_set in validation_rules[element_name]:
+            # TODO: Prüfen, ob Bedingungen zur Anwendung der Regel erfüllt werden (validation_rules_set["rule_conditions"])
+
             # element children optional
             if not validation_rules_set["element_children_optional"]:
                 if len(element) == 0:
@@ -104,13 +106,12 @@ def assess_element_structure(element: etree.Element, element_sourceline: int, xm
 
 
 
-def validate(input_file: str, xmlns_def=None, validation_rule_file=None):
+def validate(input_file: str, xmlns_def=None, validation_rules=None):
     if xmlns_def is None:
         xmlns_def = {}
-    if validation_rule_file is None:
-        validation_rule_file = "helpers/example_rules.xml"
+    if validation_rules is None:
+        validation_rules = examples.compile_example_rules()
         logger.warn("No validation rules defined; using example rules for validation.")
-    validation_rules = rules.get_rules_from_xml(validation_rule_file)
     validation_messages = []
     validation_results = []
 
