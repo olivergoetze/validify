@@ -7,6 +7,6 @@ from .lxmlschemavalidator import (
 )
 
 from .helpers import (
-  examples,
+  rules,
   messages,
 )

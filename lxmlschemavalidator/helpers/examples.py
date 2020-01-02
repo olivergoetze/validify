@@ -1,4 +1,5 @@
 def compile_example_rules() -> dict:
+
     # create example validation rules for testing
     validation_rules = {}
 
