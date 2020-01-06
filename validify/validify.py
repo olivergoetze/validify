@@ -1,13 +1,13 @@
-"""lxmlschemavalidator"""
+"""validify"""
 
 from lxml import etree
 from logzero import logger
 import collections
 
-from lxmlschemavalidator.helpers.cleanup_compare_strings import get_compare_value
-from lxmlschemavalidator.helpers import normalize_space
-from lxmlschemavalidator.helpers import messages
-from lxmlschemavalidator.helpers import examples
+from validify.helpers.cleanup_compare_strings import get_compare_value
+from validify.helpers import normalize_space
+from validify.helpers import messages
+from validify.helpers import examples
 
 
 def assess_element_structure(element: etree.Element, element_sourceline: int, xmlns_def: dict, validation_rules: dict, validation_messages: list, validation_results: list) -> list:

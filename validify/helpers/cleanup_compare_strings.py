@@ -1,4 +1,4 @@
-from lxmlschemavalidator.helpers import normalize_space
+from validify.helpers import normalize_space
 
 def get_compare_value(compare_element):
 

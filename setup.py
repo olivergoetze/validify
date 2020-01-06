@@ -1,4 +1,4 @@
-"""Setup for the lxmlschemavalidator package."""
+"""Setup for the validify package."""
 
 import setuptools
 
@@ -9,13 +9,13 @@ with open('README.md') as f:
 setuptools.setup(
     author="Oliver Götze",
     author_email="oliver.goetze@mailbox.org",
-    name='lxmlschemavalidator',
+    name='validify',
     license="MIT",
-    description='lxmlschemavalidator is a lxml-based validator for assessing the structure of an xml tree, seeking to '
-                'cover a good portion of the XML Schema 1.1 Definition.',
+    description='validify is a rule-based validator for assessing the structure of an xml tree, built on top of the lxml library. It currently covers '
+                'a subset of the XML Schema 1.1 Definition.',
     version='v0.0.1',
     long_description=README,
-    url='https://github.com/olivergoetze/lxmlschemavalidator',
+    url='https://github.com/olivergoetze/validify',
     packages=setuptools.find_packages(),
     python_requires=">=3.5",
     install_requires=['lxml', 'logzero'],
