@@ -100,6 +100,13 @@ def assess_element_structure(element: etree.Element, element_sourceline: int, xm
                     if element.text not in validation_rules_set["allowed_values"]:
                         validation_messages.append("{} -- Element value not eqal to required value: '{}' != '{}'".format(element_name, element.text, ", ".join(validation_rules_set["allowed_values"])))
 
+            # Attribute definition
+            for attribute_definition in validation_rules_set["attribute_def"]:
+                if attribute_definition["attribute_name"] in element.attrib:
+                    if element.attrib[attribute_definition["attribute_name"]] not in attribute_definition["allowed_values"]:
+                        validation_messages.append("{}, attribute {} -- attribute value not eqal to required value: '{}' != '{}'".format(element_name, attribute_definition["attribute_name"], element.attrib[attribute_definition["attribute_name"]], ", ".join(attribute_definition["allowed_values"])))
+
+
 
 
     return validation_results # TODO: Mapping der Meldungs-IDs auf Kategorien sollte im DPT selbst über eine Konkordanz erfolgen.)
