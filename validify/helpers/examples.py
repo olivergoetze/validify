@@ -15,7 +15,6 @@ def compile_example_rules() -> dict:
     ruleset["max_occurence"] = 2  # maximal erwartetes Auftreten des Elements (None = unbegrenzt)
     ruleset["text_character_content_allowed"] = False
     ruleset["tail_character_content_allowed"] = False
-    ruleset["level_occurence"] = ["collection", "class", "series", "subseries", "file", "item"]  # TODO: EAD-spezifisch --> generisch umsetzen (indem etwa eine Attributwert-Bedingung für das Auftreten festgelegt werden kann)
 
     # Erweiterung um Enumeration, Pattern, Datentyp und Attribut-Spezifizierung
     ruleset["allowed_values"] = ["a", "b"]
