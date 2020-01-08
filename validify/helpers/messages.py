@@ -24,6 +24,8 @@ def get_message_by_id(message_id: str, lang: str="de") -> str:
             message_str = "Element {}: Tatsächlicher Elementwert entspricht nicht den zulässigen Patterns: '{}' != '{}'."
         elif message_id == "0012":
             message_str = "Element {}, Attribut {}: Tatsächlicher Attributwert entspricht nicht den zulässigen Werten: '{}' != '{}'."
+        elif message_id == "0013":
+            message_str = "Element {}, Attribut {}: Tatsächlicher Attributwert entspricht nicht den zulässigen Patterns: '{}' != '{}'."
         else:
             message_str = ""
     else:
@@ -51,6 +53,8 @@ def get_message_by_id(message_id: str, lang: str="de") -> str:
             message_str = "Element {}: Element value not valid according to allowed patterns: '{}' != '{}'"
         elif message_id == "0012":
             message_str = "Element {}, attribute {}: attribute value not eqal to required value: '{}' != '{}'"
+        elif message_id == "0013":
+            message_str = "Element {}, attribute {}: attribute value not valid according to allowed patterns: '{}' != '{}'"
         else:
             message_str = ""
 
