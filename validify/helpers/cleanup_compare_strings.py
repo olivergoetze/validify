@@ -1,6 +1,7 @@
+from lxml import etree
 from validify.helpers import normalize_space
 
-def get_compare_value(compare_element):
+def get_compare_value(compare_element: etree.Element) -> str:
 
     # normalize-space auf das Element anwenden, damit Whitespace nicht berücksichtigt wird
     normalize_space.parse_xml_content(compare_element)
