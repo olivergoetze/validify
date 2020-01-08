@@ -41,14 +41,20 @@ def assess_element_structure(element: etree.Element, element_sourceline: int, xm
                 if len(validation_rule_condition["text_values"]) > 0:
                     if element.text not in validation_rule_condition["text_values"]:
                         condition_satisfied["text_values"] = False
-                if len(validation_rule_condition["attribute_values"]) > 0:
-                    pass
+                if len(validation_rule_condition["attribute_def"]) > 0:
+                    for attribute in validation_rule_condition["attribute_def"]:
+                        if attribute["attribute_name"] in element.attrib:
+                            if element.attrib[attribute["attribute_name"]] not in attribute["allowed_values"]:
+                                condition_satisfied["attribute_values"] = False
+                        else:
+                            condition_satisfied["attribute_values"] = False
                 if len(validation_rule_condition["reference_elements"]) > 0:
                     pass
 
             not_satisfied = [condition_key for condition_key, condition_value in condition_satisfied.items() if condition_value is False]
             if len(not_satisfied) > 0:
                 logger.debug("Validation ruleset for element {} not applied because the following rule conditions are not satisfied: {}.".format(element_name, ", ".join(not_satisfied)))
+                # TODO: continue
 
 
             # element children optional
