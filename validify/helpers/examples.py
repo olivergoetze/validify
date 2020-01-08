@@ -22,6 +22,7 @@ def compile_example_rules() -> dict:
     ruleset["allowed_datatypes"] = ["xs:ID", "xs:TOKEN"]
     ruleset["attribute_def"] = []
     ruleset["attribute_def"].append({"attribute_name": "id", "allowed_values": ["a", "b"], "allowed_patterns": ["regex-pattern 1", "regex-pattern 2"]})
+    ruleset["attribute_def"].append({"attribute_name": "level", "allowed_values": ["collection", "class", "series", "file", "item"], "allowed_patterns": []})
 
     # Erweiterung um Bedingung zur Anwendung der Regeln
     ruleset["rule_conditions"] = {"text_value": "", "attribute_values": [{"attribute 1": "value 1", "attribute 2": "value 2"}], "reference_element": {"element_name": "{urn:isbn:1-931666-22-9}c", "element_attrib": {"level": "file", "type": "dao"},"preceding_elements": 2}}  # mit preceding_elements wird angegeben, wie viele Ebenen das referezierte Element vom zu prüfenden Element entfernt ist. z.B. 2, wenn c/did/unitid geprüft wird und ermittelt werden soll, ob in c das Attribut "level" den Wert "file" enthält.
