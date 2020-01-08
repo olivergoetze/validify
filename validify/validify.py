@@ -223,3 +223,5 @@ def validate(input_file: str, xmlns_def=None, validation_rules=None, message_lan
         aggregated_validation_messages = collections.Counter(validation_messages)
         for validation_message in aggregated_validation_messages:
             log_message("{} ({} occurences)".format(validation_message, aggregated_validation_messages[validation_message]), "info", log_to_console)
+
+    return validation_results
