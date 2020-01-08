@@ -49,7 +49,15 @@ def assess_element_structure(element: etree.Element, element_sourceline: int, xm
                         else:
                             condition_satisfied["attribute_values"] = False
                 if len(validation_rule_condition["reference_elements"]) > 0:
-                    pass
+                    for reference in validation_rule_condition["reference_elements"]:
+                        reference_element = element
+                        for step in range(reference["preceding_elements"]):
+                            reference_element = reference_element.getparent()
+
+                        if reference_element.tag != reference["element_name"]:
+                            condition_satisfied["reference_elements"] = False
+                            
+
 
             not_satisfied = [condition_key for condition_key, condition_value in condition_satisfied.items() if condition_value is False]
             if len(not_satisfied) > 0:
