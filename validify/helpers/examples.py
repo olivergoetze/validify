@@ -26,7 +26,7 @@ def compile_example_rules() -> dict:
 
     # Erweiterung um Bedingung zur Anwendung der Regeln
     ruleset["rule_conditions"] = []
-    ruleset["rule_conditions"].append({"text_values": ["DE-1234"], "attribute_def": [{"attribute_name": "name 1", "allowed_values": ["value 1"]}], "reference_elements": [{"element_name": "{urn:isbn:1-931666-22-9}c", "element_attrib": {"level": "file", "type": "dao"},"preceding_elements": 2}]})  # mit preceding_elements wird angegeben, wie viele Ebenen das referezierte Element vom zu prüfenden Element entfernt ist. z.B. 2, wenn c/did/unitid geprüft wird und ermittelt werden soll, ob in c das Attribut "level" den Wert "file" enthält.
+    ruleset["rule_conditions"].append({"text_values": ["DE-1234"], "attribute_def": [{"attribute_name": "name 1", "allowed_values": ["value 1"]}], "reference_elements": [{"element_name": "{urn:isbn:1-931666-22-9}c", "attribute_def": [{"attribute_name": "level", "allowed_values": ["class", "series"]}],"preceding_elements": 2}]})  # mit preceding_elements wird angegeben, wie viele Ebenen das referezierte Element vom zu prüfenden Element entfernt ist. z.B. 2, wenn c/did/unitid geprüft wird und ermittelt werden soll, ob in c das Attribut "level" den Wert "file" enthält.
 
     validation_rules["{urn:isbn:1-931666-22-9}c"].append(ruleset)
 

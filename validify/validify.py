@@ -34,7 +34,7 @@ def assess_element_structure(element: etree.Element, element_sourceline: int, xm
     if element_name in validation_rules:
 
         for validation_rules_set in validation_rules[element_name]:
-            # TODO: Prüfen, ob Bedingungen zur Anwendung der Regel erfüllt werden (validation_rules_set["rule_conditions"])
+            # Check if conditions for applying the validiation rule set are satisfied (validation_rules_set["rule_conditions"])
             condition_satisfied = {"text_values": True, "attribute_values": True, "reference_elements": True}
 
             for validation_rule_condition in validation_rules_set["rule_conditions"]:
@@ -56,13 +56,18 @@ def assess_element_structure(element: etree.Element, element_sourceline: int, xm
 
                         if reference_element.tag != reference["element_name"]:
                             condition_satisfied["reference_elements"] = False
-                            
+                        for attribute in reference["attribute_def"]:
+                            if attribute["attribute_name"] in reference_element.attrib:
+                                if reference_element.attrib[attribute["attribute_name"]] not in attribute["allowed_values"]:
+                                    condition_satisfied["reference_elements"] = False
+                            else:
+                                condition_satisfied["reference_elements"] = False
 
 
             not_satisfied = [condition_key for condition_key, condition_value in condition_satisfied.items() if condition_value is False]
             if len(not_satisfied) > 0:
                 logger.debug("Validation ruleset for element {} not applied because the following rule conditions are not satisfied: {}.".format(element_name, ", ".join(not_satisfied)))
-                # TODO: continue
+                continue
 
 
             # element children optional
@@ -200,7 +205,7 @@ def assess_element_structure(element: etree.Element, element_sourceline: int, xm
 
 
 
-    return validation_results # TODO: Mapping der Meldungs-IDs auf Kategorien sollte im DPT selbst über eine Konkordanz erfolgen.)
+    return validation_results
 
 
 
