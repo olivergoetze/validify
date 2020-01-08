@@ -3,7 +3,7 @@
 from lxml import etree
 from logzero import logger
 import collections
-# import re
+import re
 
 from validify.helpers.cleanup_compare_strings import get_compare_value
 from validify.helpers import normalize_space
@@ -112,11 +112,27 @@ def assess_element_structure(element: etree.Element, element_sourceline: int, xm
                         validation_messages.append(message_text)
                         validation_results.append({"message_id": message_id, "message_text": message_text, "element_name": element_name, "element_sourceline": element_sourceline})
 
+            # allowed patterns (xs:pattern)
+            if len(validation_rules_set["allowed_patterns"]) > 0:
+                valid_content = False
+                if element.text is not None:
+                    for pattern in validation_rules_set["allowed_patterns"]:
+                        match_pattern = re.compile(pattern)
+                        pattern_matches = match_pattern.match(element.text)
+                        if pattern_matches:
+                            valid_content = True
+                            break
+                if not valid_content:
+                    message_id = "0011"
+                    message_text = messages.get_message_by_id(message_id, message_lang).format(element_name, element.text, ", ".join(validation_rules_set["allowed_patterns"]))
+                    validation_messages.append(message_text)
+                    validation_results.append({"message_id": message_id, "message_text": message_text, "element_name": element_name, "element_sourceline": element_sourceline})
+
             # Attribute definition
             for attribute_definition in validation_rules_set["attribute_def"]:
                 if attribute_definition["attribute_name"] in element.attrib:
                     if element.attrib[attribute_definition["attribute_name"]] not in attribute_definition["allowed_values"]:
-                        message_id = "0011"
+                        message_id = "0012"
                         message_text = messages.get_message_by_id(message_id, message_lang).format(element_name, attribute_definition["attribute_name"], element.attrib[attribute_definition["attribute_name"]], ", ".join(attribute_definition["allowed_values"]))
                         validation_messages.append(message_text)
                         validation_results.append({"message_id": message_id, "message_text": message_text, "element_name": element_name, "element_sourceline": element_sourceline})

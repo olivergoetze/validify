@@ -18,7 +18,7 @@ def compile_example_rules() -> dict:
 
     # Erweiterung um Enumeration, Pattern, Datentyp und Attribut-Spezifizierung
     ruleset["allowed_values"] = ["a", "b"]
-    ruleset["allowed_patterns"] = ["regex-pattern 1", "regex-pattern 2"]
+    ruleset["allowed_patterns"] = ["^DE-\d{4}$", "regex-pattern 2"]
     ruleset["allowed_datatypes"] = ["xs:ID", "xs:TOKEN"]
     ruleset["attribute_def"] = []
     ruleset["attribute_def"].append({"attribute_name": "id", "allowed_values": ["a", "b"], "allowed_patterns": ["regex-pattern 1", "regex-pattern 2"]})

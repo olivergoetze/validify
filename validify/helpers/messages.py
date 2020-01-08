@@ -19,9 +19,11 @@ def get_message_by_id(message_id: str, lang: str="de") -> str:
         elif message_id == "0009":
             message_str = "Element {} darf keinen Text (Character Content) vor dem Folgeelement (Tail) enthalten."
         elif message_id == "0010":
-            message_str = "{} -- Tatsächlicher Elementwert entspricht nicht den zulässigen Werten: '{}' != '{}'."
+            message_str = "Element {}: Tatsächlicher Elementwert entspricht nicht den zulässigen Werten: '{}' != '{}'."
         elif message_id == "0011":
-            message_str = "{}, Attribut {} -- Tatsächlicher Attributwert entspricht nicht den zulässigen Werten: '{}' != '{}'."
+            message_str = "Element {}: Tatsächlicher Elementwert entspricht nicht den zulässigen Patterns: '{}' != '{}'."
+        elif message_id == "0012":
+            message_str = "Element {}, Attribut {}: Tatsächlicher Attributwert entspricht nicht den zulässigen Werten: '{}' != '{}'."
         else:
             message_str = ""
     else:
@@ -44,9 +46,11 @@ def get_message_by_id(message_id: str, lang: str="de") -> str:
         elif message_id == "0009":
             message_str = "Element {} should not contain tail character content."
         elif message_id == "0010":
-            message_str = "{} -- Element value not eqal to required value: '{}' != '{}'"
+            message_str = "Element {}: Element value not eqal to allowed values: '{}' != '{}'"
         elif message_id == "0011":
-            message_str = "{}, attribute {} -- attribute value not eqal to required value: '{}' != '{}'"
+            message_str = "Element {}: Element value not valid according to allowed patterns: '{}' != '{}'"
+        elif message_id == "0012":
+            message_str = "Element {}, attribute {}: attribute value not eqal to required value: '{}' != '{}'"
         else:
             message_str = ""
 
