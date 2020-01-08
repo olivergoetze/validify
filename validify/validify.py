@@ -25,7 +25,7 @@ def log_message(message: str, level: str, log_to_console: bool):
         elif level == "error":
             logger.error(message)
 
-def assess_element_structure(element: etree.Element, element_sourceline: int, xmlns_def: dict, validation_rules: dict, validation_messages: list, validation_results: list, message_lang: str, log_to_console: bool) -> list:
+def assess_element_structure(element: etree.Element, element_sourceline: int, xmlns_def: dict, validation_rules: dict, validation_messages: list, validation_results: list, message_lang: str) -> list:
     element_name = element.tag
     element_attributes = element.attrib
     element_subelements = [subelement.tag for subelement in element]
@@ -213,7 +213,7 @@ def validate(input_file: str, xmlns_def=None, validation_rules=None, message_lan
         for xml_element in xml_elements:
             xml_element_sourceline = xml_element.sourceline  # get original source line before applying normalize-space
             normalize_space.parse_xml_content(xml_element)  # apply normalize-space so only actual character content is found
-            validation_results = assess_element_structure(xml_element, xml_element_sourceline, xmlns_def, validation_rules, validation_messages, validation_results, message_lang, log_to_console)
+            validation_results = assess_element_structure(xml_element, xml_element_sourceline, xmlns_def, validation_rules, validation_messages, validation_results, message_lang)
     except etree.XMLSyntaxError:
         log_message("Input file {} is not a well-formed XML document.".format(input_file), "error", log_to_console)
 
