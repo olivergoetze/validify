@@ -1,0 +1,3 @@
+<test_example>
+    <element invalid_attribute_name="value" valid_attribute_name="invalid_value" another_valid_attribute_name="valid_value">valid_text_value</element>
+</test_example>

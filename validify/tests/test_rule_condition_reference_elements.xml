@@ -1,0 +1,5 @@
+<test_example>
+    <reference_element valid_attribute_name="valid_value" another_valid_attribute_name="valid_value" reference_test="invalid_value">
+        <element valid_attribute_name="valid_value" another_valid_attribute_name="valid_value">valid_text_value</element>
+    </reference_element>
+</test_example>
