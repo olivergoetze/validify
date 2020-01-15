@@ -1,5 +1,8 @@
 def compile_example_rules() -> dict:
+    """Compile example validation rules.
 
+    These rules are applied when no ruleset is given as a parameter to validify.validate.
+    """
 
     validation_rules = {}
 

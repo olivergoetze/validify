@@ -1,6 +1,11 @@
 from lxml import etree
 
 def normalize_space(element: etree.Element, part: str):
+    """Function for replacing whitespace in strings.
+
+    Text is replaced inside elements (text) as well as in between elements (tail).
+    """
+
     if part == "text":
         element_text = element.text.replace("\n", " ").replace("\t", " ").replace("\r", " ")
         element_text = " ".join(element_text.split())
@@ -11,7 +16,8 @@ def normalize_space(element: etree.Element, part: str):
         element.tail = element_tail
 
 def parse_xml_content(element: etree.Element):
-    # Whitespace (redundante Spaces, Newlines, Tabs, Carriage Returns) aus Elementinhalten entfernen
+    """Remove whitespace (redundant spaces, newlines, tabs, carriage returns) from element content and tail."""
+
     if element.text is not None:
         normalize_space(element, part="text")
 

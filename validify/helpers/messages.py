@@ -1,4 +1,6 @@
 def get_message_by_id(message_id: str, lang: str="de") -> str:
+    """Return validation message string by id."""
+
     if lang == "de":
         if message_id == "0001":
             message_str = "Element {} enthält keine Subelemente, obwohl eines oder mehrere Subelemente erwartet."
@@ -30,7 +32,7 @@ def get_message_by_id(message_id: str, lang: str="de") -> str:
             message_str = ""
     else:
         if message_id == "0001":
-            message_str = "Element {} does not contain any subelements, although one or more subelements is expected."
+            message_str = "Element {} does not contain any subelements, although one or more subelements are expected."
         elif message_id == "0002":
             message_str = "Element {} does not contain any text, although it is not expected to be empty."
         elif message_id == "0003":

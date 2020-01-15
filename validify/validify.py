@@ -1,4 +1,4 @@
-"""validify"""
+"""Validify - rule-based validator for assessing the structure of an xml tree."""
 
 from lxml import etree
 import logging
@@ -15,6 +15,8 @@ from validify.helpers import examples
 logzero.loglevel(logging.INFO)
 
 def log_message(message: str, level: str, log_to_console: bool):
+    """Deliver log message to logger if console logging is enabled."""
+
     if log_to_console:
         if level == "debug":
             logger.debug(message)
@@ -26,6 +28,12 @@ def log_message(message: str, level: str, log_to_console: bool):
             logger.error(message)
 
 def assess_element_structure(element: etree.Element, element_sourceline: int, xmlns_def: dict, validation_rules: dict, validation_messages: list, validation_results: list, message_lang: str) -> list:
+    """Asssess the structure of an xml element, according to the provided validation rules.
+
+    Takes an etree.Element, namespace definition and validation rules.
+    If a rule's condition is not satisfied, a validation message is created, logged and added to a validation results dict.  # TODO: add example for validation results dict.
+    """
+
     element_name = element.tag
     element_attributes = element.attrib
     element_subelements = [subelement.tag for subelement in element]
@@ -210,6 +218,12 @@ def assess_element_structure(element: etree.Element, element_sourceline: int, xm
 
 
 def validate(input_file: str, xmlns_def=None, validation_rules=None, message_lang=None, log_to_console=True):
+    """Validate a given xml file according to the supplied validation rules and return validation messages as a dictionary.
+
+    All elements in the xml file will be processed.
+    For a documentation of parameters, see https://github.com/olivergoetze/validify.
+    """
+
     if xmlns_def is None:
         xmlns_def = {}
     if validation_rules is None:

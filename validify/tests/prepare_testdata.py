@@ -1,4 +1,6 @@
 def compile_test_rules() -> dict:
+    """Prepare test rules for pytest functions in test_main.py"""
+
     validation_rules = {"element": []}
     ruleset = {}
 

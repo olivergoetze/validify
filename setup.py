@@ -11,14 +11,15 @@ setuptools.setup(
     author_email="oliver.goetze@mailbox.org",
     name='validify',
     license="MIT",
-    description='validify is a rule-based validator for assessing the structure of an xml tree, built on top of the lxml library. It currently covers '
+    description='validify is a rule-based validation module for assessing the structure of an xml tree, built on top of the lxml library. It currently covers '
                 'a subset of the XML Schema 1.1 Definition.',
-    version='v0.0.1',
+    version='v0.1.0',
     long_description=README,
     url='https://github.com/olivergoetze/validify',
     packages=setuptools.find_packages(),
     python_requires=">=3.5",
     install_requires=['lxml', 'logzero'],
+    tests_require=["pytest"],
     classifiers=[
         # Trove classifiers
         # (https://pypi.python.org/pypi?%3Aaction=list_classifiers)
