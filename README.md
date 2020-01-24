@@ -73,7 +73,7 @@ Each element can be provided with one or more rulesets.
 The `rule_conditions` definiton can be used when the ruleset should only be applied if the validated element contains the defined attribute(s) and attribute value(s). Besides the validated element, a reference element can also be defined and checked for attribute values. Currently, it must be a parent element of the validated element (parent level defined by `preceding_elements`).
 
 #### Validation output
-`validify.validate` returns a dictionary containing the validation messages:
+`validify.validate` returns a list containing the validation messages as dictionaries:
 ```python
 [{'message_id': '0001', 'message_text ': 'Element example_element does not contain any subelements, although one or more subelements are expected.', 'element_name': 'example_element', 'element_sourceline': '23'}]
 ```

@@ -20,7 +20,7 @@ class TestElementStructureAsssessment:
         assert len(validation_result) == 0
 
     def test_ruleset_condition_attribute_values(self):
-        """Parse an xml element with an invalid attribute value and check if the validation rule is rightly skipped.
+        """Parse an xml element with an invalid attribute value and check if the validation rule is skipped correctly.
 
         These tests starting with "test_ruleset_condition" are meant to assert whether the conditions set for applying a ruleset are correctly evaluated.
         """
