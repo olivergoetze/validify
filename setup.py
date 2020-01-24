@@ -15,6 +15,7 @@ setuptools.setup(
                 'a subset of the XML Schema 1.1 Definition.',
     version='v0.1.0',
     long_description=README,
+    long_description_content_type="text/markdown",
     url='https://github.com/olivergoetze/validify',
     packages=setuptools.find_packages(),
     python_requires=">=3.5",
