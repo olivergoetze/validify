@@ -75,7 +75,7 @@ The `rule_conditions` definiton can be used when the ruleset should only be appl
 #### Validation output
 `validify.validate` returns a list containing the validation messages as dictionaries:
 ```python
-[{'message_id': '0001', 'message_text ': 'Element example_element does not contain any subelements, although one or more subelements are expected.', 'element_name': 'example_element', 'element_sourceline': '23'}]
+[{'message_id': '0001', 'message_text ': 'Element example_element does not contain any subelements, although one or more subelements are expected.', 'element_name': '{namespace}example_element', 'local_name': 'example_element', 'element_sourceline': '23'}]
 ```
 
 ### XML Schema feature coverage

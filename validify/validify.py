@@ -31,7 +31,9 @@ def assess_element_structure(element: etree.Element, element_sourceline: int, xm
     """Asssess the structure of an xml element, according to the provided validation rules.
 
     Takes an etree.Element, namespace definition and validation rules.
-    If a rule's condition is not satisfied, a validation message is created, logged and added to a validation results dict.  # TODO: add example for validation results dict.
+    If a rule's condition is not satisfied, a validation message is created as a dict, logged and added to a validation results list.
+
+    Example output: [{'message_id': '0001', 'message_text ': 'Element example_element does not contain any subelements, although one or more subelements are expected.', 'element_name': '{namespace}example_element', 'local_name': 'example_element' 'element_sourceline': '23'}]
     """
 
     element_name = element.tag
