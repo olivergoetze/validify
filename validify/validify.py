@@ -10,7 +10,7 @@ import re
 from validify.helpers.cleanup_compare_strings import get_compare_value
 from validify.helpers import normalize_space
 from validify.helpers import messages
-from validify.helpers import examples
+from validify.tests.prepare_testdata import compile_test_rules
 
 logzero.loglevel(logging.INFO)
 
@@ -228,7 +228,7 @@ def validate(input_file: str, xmlns_def=None, validation_rules=None, message_lan
     if xmlns_def is None:
         xmlns_def = {}
     if validation_rules is None:
-        validation_rules = examples.compile_example_rules()
+        validation_rules = compile_test_rules()
         log_message("No validation rules defined; using example rules for validation.", "warn", log_to_console)
     message_lang_options = ["de", "en"]
     if message_lang is None:

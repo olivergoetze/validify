@@ -1,5 +1,9 @@
 def compile_test_rules() -> dict:
-    """Prepare test rules for pytest functions in test_main.py"""
+    """Compile example validation rules.
+
+    These rules are applied when no ruleset is given as a parameter to validify.validate.
+    Also used as test rules for pytest functions in test_main.py
+    """
 
     validation_rules = {"element": []}
     ruleset = {}
