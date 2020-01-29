@@ -130,4 +130,48 @@ def compile_test_rules() -> dict:
     rulesets_occurence_test.append(ruleset)
     validation_rules["occurence_test"] = rulesets_occurence_test
 
+    rulesets_character_content_test = []
+    ruleset = {}
+
+    ruleset["element_content_optional"] = True
+    ruleset["element_children_optional"] = True
+    ruleset["optional_attributes"] = []
+    ruleset["obligatory_attributes"] = []
+    ruleset["optional_subelements"] = []
+    ruleset["obligatory_subelements"] = []
+    ruleset["max_occurence"] = None
+    ruleset["text_character_content_allowed"] = False
+    ruleset["tail_character_content_allowed"] = False
+
+    ruleset["allowed_values"] = []
+    ruleset["allowed_patterns"] = []
+    ruleset["allowed_datatypes"] = []
+    ruleset["attribute_def"] = []
+    ruleset["rule_conditions"] = []
+
+    rulesets_character_content_test.append(ruleset)
+    validation_rules["character_content_test"] = rulesets_character_content_test
+
+    rulesets_value_test = []
+    ruleset = {}
+
+    ruleset["element_content_optional"] = True
+    ruleset["element_children_optional"] = True
+    ruleset["optional_attributes"] = []
+    ruleset["obligatory_attributes"] = []
+    ruleset["optional_subelements"] = []
+    ruleset["obligatory_subelements"] = []
+    ruleset["max_occurence"] = None
+    ruleset["text_character_content_allowed"] = True
+    ruleset["tail_character_content_allowed"] = True
+
+    ruleset["allowed_values"] = ["allowed value"]
+    ruleset["allowed_patterns"] = []
+    ruleset["allowed_datatypes"] = []
+    ruleset["attribute_def"] = []
+    ruleset["rule_conditions"] = []
+
+    rulesets_value_test.append(ruleset)
+    validation_rules["value_test"] = rulesets_value_test
+
     return validation_rules
