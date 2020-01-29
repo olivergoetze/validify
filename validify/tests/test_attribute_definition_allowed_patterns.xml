@@ -1,0 +1,5 @@
+<test_example>
+    <pattern_test defined_attribute="test-123">test-123</pattern_test>
+    <pattern_test defined_attribute="test-1234">test-1234</pattern_test>
+    <pattern_test defined_attribute="test-12345">test-123</pattern_test>
+</test_example>

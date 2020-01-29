@@ -180,7 +180,7 @@ def compile_test_rules() -> dict:
 
     ruleset["element_content_optional"] = True
     ruleset["element_children_optional"] = True
-    ruleset["optional_attributes"] = []
+    ruleset["optional_attributes"] = ["defined_attribute"]
     ruleset["obligatory_attributes"] = []
     ruleset["optional_subelements"] = []
     ruleset["obligatory_subelements"] = []
@@ -195,6 +195,9 @@ def compile_test_rules() -> dict:
     ruleset["rule_conditions"] = []
 
     rulesets_pattern_test.append(ruleset)
+    ruleset["attribute_def"].append(
+        {"attribute_name": "defined_attribute", "allowed_values": ["test-1234", "test-123"],
+         "allowed_patterns": ["^test-\\d{4}$", "^test-\\d{3}$"]})
     validation_rules["pattern_test"] = rulesets_pattern_test
 
     return validation_rules

@@ -137,11 +137,12 @@ class TestElementStructureAsssessment:
             assert validation_result[0]["message_id"] == "0012"
 
 
-    # def test_attribute_definition_allowed_patterns(self):
-    #     """Parse an xml element with an attribute value not compliant to the provided regexpattern, and ensure that the correct validation message is applied."""
-    #
-    #     validation_result = validify.validate("validify/tests/test_attribute_definition_allowed_patterns.xml",
-    #                                           validation_rules=compile_test_rules(), log_to_console=False)
-    #     assert len(validation_result) == 1
-    #     if len(validation_result) > 0:
-    #         assert validation_result[0]["message_id"] == "0013"
+    def test_attribute_definition_allowed_patterns(self):
+        """Parse an xml element with an attribute value not compliant to the provided regexpattern, and ensure that the correct validation message is applied."""
+
+        validation_result = validify.validate("validify/tests/test_attribute_definition_allowed_patterns.xml",
+                                              validation_rules=compile_test_rules(), log_to_console=False)
+        assert len(validation_result) == 2
+        if len(validation_result) == 2:
+            assert validation_result[0]["message_id"] == "0012"
+            assert validation_result[1]["message_id"] == "0013"
