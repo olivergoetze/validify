@@ -39,12 +39,16 @@ class TestElementStructureAsssessment:
         assert len(validation_result) == 0
 
     def test_rule_element_children_optional(self):
+        """Parse an xml element without subelements and ensure that the correct validiation message is applied."""
+
         validation_result = validify.validate("validify/tests/test_rule_element_children_optional.xml", validation_rules=compile_test_rules(), log_to_console=False)
         assert len(validation_result) == 1
         if len(validation_result) > 0:
             assert validation_result[0]["message_id"] == "0001"
 
     def test_rule_element_content_optional(self):
+        """Parse an xml element without element content and ensure that the correct validation message is applied."""
+
         validation_result = validify.validate("validify/tests/test_rule_element_content_optional.xml",
                                               validation_rules=compile_test_rules(), log_to_console=False)
         assert len(validation_result) == 1
@@ -52,19 +56,29 @@ class TestElementStructureAsssessment:
             assert validation_result[0]["message_id"] == "0002"
 
     def test_rule_optional_attributes(self):
+        """Parse an xml element with a non-valid attribute and ensure that the correct validation message is applied."""
+
         validation_result = validify.validate("validify/tests/test_rule_optional_attributes.xml", validation_rules=compile_test_rules(), log_to_console=False)
         assert len(validation_result) == 1
         if len(validation_result) > 0:
             assert validation_result[0]["message_id"] == "0003"
 
     def test_rule_obligatory_attributes(self):
+        """Parse an xml element with a missing obligatory attribute and ensure that the correct validation message is applied."""
+
         validation_result = validify.validate("validify/tests/test_rule_obligatory_attributes.xml", validation_rules=compile_test_rules(), log_to_console=False)
         assert len(validation_result) == 1
         if len(validation_result) > 0:
             assert validation_result[0]["message_id"] == "0004"
 
     def test_rule_optional_subelements(self):
-        pass
+        """Parse an xml element with an invalid subelement and ensure that the correct validation message is applied."""
+
+        validation_result = validify.validate("validify/tests/test_rule_optional_subelements.xml",
+                                              validation_rules=compile_test_rules(), log_to_console=False)
+        assert len(validation_result) == 1
+        if len(validation_result) > 0:
+            assert validation_result[0]["message_id"] == "0005"
 
     def test_rule_obligatory_subelements(self):
         pass
