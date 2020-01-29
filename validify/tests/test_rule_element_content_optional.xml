@@ -1,0 +1,3 @@
+<test_example>
+    <subelement><child_element></child_element></subelement>  <!-- Element without subelements -->
+</test_example>

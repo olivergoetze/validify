@@ -40,14 +40,24 @@ class TestElementStructureAsssessment:
 
 
     def test_rule_element_children_optional(self):
-        pass
+        validation_result = validify.validate("validify/tests/test_rule_element_children_optional.xml", validation_rules=compile_test_rules(), log_to_console=False)
+        assert len(validation_result) == 1
+        if len(validation_result) > 0:
+            assert validation_result[0]["message_id"] == "0001"
 
     def test_rule_element_content_optional(self):
-        pass
+        validation_result = validify.validate("validify/tests/test_rule_element_content_optional.xml",
+                                              validation_rules=compile_test_rules(), log_to_console=False)
+        assert len(validation_result) == 1
+        if len(validation_result) > 0:
+            assert validation_result[0]["message_id"] == "0002"
 
 
     def test_rule_optional_attributes(self):
-        pass
+        validation_result = validify.validate("validify/tests/test_rule_optional_attributes.xml", validation_rules=compile_test_rules(), log_to_console=False)
+        assert len(validation_result) == 1
+        if len(validation_result) > 0:
+            assert validation_result[0]["message_id"] == "0003"
 
     def test_rule_obligatory_attributes(self):
         pass

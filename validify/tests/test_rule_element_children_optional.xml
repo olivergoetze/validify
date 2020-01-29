@@ -1,0 +1,3 @@
+<test_example>
+    <subelement>text value</subelement>  <!-- Element without subelements -->
+</test_example>

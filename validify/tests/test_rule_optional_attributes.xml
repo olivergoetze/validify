@@ -1,0 +1,3 @@
+<test_example>
+    <attribute_test valid_optional_attribute="attribute_value" invalid_optional_attribute="attribute_value"/>
+</test_example>
