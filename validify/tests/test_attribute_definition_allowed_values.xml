@@ -1,0 +1,5 @@
+<test_example>
+    <value_test defined_attribute="allowed value 01">allowed value</value_test>
+    <value_test defined_attribute="allowed value 02">allowed value</value_test>
+    <value_test defined_attribute="non-valid value">allowed value</value_test>
+</test_example>
