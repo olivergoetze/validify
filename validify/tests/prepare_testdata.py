@@ -19,11 +19,11 @@ def compile_test_rules() -> dict:
     ruleset["tail_character_content_allowed"] = False
 
     ruleset["allowed_values"] = ["valid_value_01", "valid_value_02"]
-    ruleset["allowed_patterns"] = ["^test-\d{4}$", "^test-\d{3}$"]
+    ruleset["allowed_patterns"] = ["^test-\\d{4}$", "^test-\\d{3}$"]
     ruleset["allowed_datatypes"] = []
     ruleset["attribute_def"] = []
     ruleset["attribute_def"].append({"attribute_name": "valid_optional_attribute_01", "allowed_values": ["valid_value_01", "valid_value_02"],
-                                     "allowed_patterns": ["^test-\d{4}$", "^test-\d{3}$"]})
+                                     "allowed_patterns": ["^test-\\d{4}$", "^test-\\d{3}$"]})
     ruleset["attribute_def"].append(
         {"attribute_name": "obligatory_attribute_01", "allowed_values": ["valid_value_01", "valid_value_02"],
          "allowed_patterns": []})
@@ -68,7 +68,7 @@ def compile_test_rules() -> dict:
     ruleset["element_content_optional"] = True
     ruleset["element_children_optional"] = True
     ruleset["optional_attributes"] = ["valid_optional_attribute"]
-    ruleset["obligatory_attributes"] = []
+    ruleset["obligatory_attributes"] = ["obligatory_attribute"]
     ruleset["optional_subelements"] = []
     ruleset["obligatory_subelements"] = []
     ruleset["max_occurence"] = None

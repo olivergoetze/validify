@@ -38,7 +38,6 @@ class TestElementStructureAsssessment:
         validation_result = validify.validate("validify/tests/test_rule_condition_reference_elements.xml", validation_rules=compile_test_rules(), log_to_console=False)
         assert len(validation_result) == 0
 
-
     def test_rule_element_children_optional(self):
         validation_result = validify.validate("validify/tests/test_rule_element_children_optional.xml", validation_rules=compile_test_rules(), log_to_console=False)
         assert len(validation_result) == 1
@@ -52,7 +51,6 @@ class TestElementStructureAsssessment:
         if len(validation_result) > 0:
             assert validation_result[0]["message_id"] == "0002"
 
-
     def test_rule_optional_attributes(self):
         validation_result = validify.validate("validify/tests/test_rule_optional_attributes.xml", validation_rules=compile_test_rules(), log_to_console=False)
         assert len(validation_result) == 1
@@ -60,8 +58,10 @@ class TestElementStructureAsssessment:
             assert validation_result[0]["message_id"] == "0003"
 
     def test_rule_obligatory_attributes(self):
-        pass
-
+        validation_result = validify.validate("validify/tests/test_rule_obligatory_attributes.xml", validation_rules=compile_test_rules(), log_to_console=False)
+        assert len(validation_result) == 1
+        if len(validation_result) > 0:
+            assert validation_result[0]["message_id"] == "0004"
 
     def test_rule_optional_subelements(self):
         pass
