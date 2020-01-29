@@ -107,4 +107,27 @@ def compile_test_rules() -> dict:
     rulesets_parent_element.append(ruleset)
     validation_rules["parent_element"] = rulesets_parent_element
 
+
+    rulesets_occurence_test = []
+    ruleset = {}
+
+    ruleset["element_content_optional"] = True
+    ruleset["element_children_optional"] = True
+    ruleset["optional_attributes"] = []
+    ruleset["obligatory_attributes"] = []
+    ruleset["optional_subelements"] = []
+    ruleset["obligatory_subelements"] = []
+    ruleset["max_occurence"] = 2
+    ruleset["text_character_content_allowed"] = True
+    ruleset["tail_character_content_allowed"] = True
+
+    ruleset["allowed_values"] = []
+    ruleset["allowed_patterns"] = []
+    ruleset["allowed_datatypes"] = []
+    ruleset["attribute_def"] = []
+    ruleset["rule_conditions"] = []
+
+    rulesets_occurence_test.append(ruleset)
+    validation_rules["occurence_test"] = rulesets_occurence_test
+
     return validation_rules

@@ -1,0 +1,5 @@
+<test_example>
+    <parent_element>
+        <valid_optional_subelement/>
+    </parent_element>
+</test_example>

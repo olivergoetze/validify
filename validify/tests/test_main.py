@@ -81,11 +81,24 @@ class TestElementStructureAsssessment:
             assert validation_result[0]["message_id"] == "0005"
 
     def test_rule_obligatory_subelements(self):
-        pass
+        """Parse an xml element with a missing obligatory subelement and ensure that the correct validation message is applied."""
 
+        validation_result = validify.validate("validify/tests/test_rule_obligatory_subelements.xml",
+                                              validation_rules=compile_test_rules(), log_to_console=False)
+        assert len(validation_result) == 1
+        if len(validation_result) > 0:
+            assert validation_result[0]["message_id"] == "0006"
 
     def test_rule_max_occurence(self):
-        pass
+        """Parse an xml element which occurs more often than allowed, and ensure that the correct validation message is applied."""
+
+        validation_result = validify.validate("validify/tests/test_rule_max_occurence.xml",
+                                              validation_rules=compile_test_rules(), log_to_console=False)
+        assert len(validation_result) == 3
+        if len(validation_result) == 3:
+            assert validation_result[0]["message_id"] == "0007"
+            assert validation_result[1]["message_id"] == "0007"
+            assert validation_result[2]["message_id"] == "0007"
 
     def test_rule_character_content_allowed(self):
         pass
