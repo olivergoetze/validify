@@ -13,7 +13,7 @@ setuptools.setup(
     license="MIT",
     description='validify is a rule-based validation module for assessing the structure of an xml tree, built on top of the lxml library. It currently covers '
                 'a subset of the XML Schema 1.1 Definition.',
-    version='v0.0.4',
+    version='v0.0.5',
     long_description=README,
     long_description_content_type="text/markdown",
     url='https://github.com/olivergoetze/validify',
