@@ -20,6 +20,7 @@ def parse_xml_content(element: etree.Element):
 
     if element.text is not None:
         normalize_space(element, part="text")
+        normalize_space(element, part="tail")
 
     for sub_element in element:
         if sub_element.text is not None:
