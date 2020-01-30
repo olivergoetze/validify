@@ -119,6 +119,9 @@ def assess_element_structure(element: etree.Element, element_sourceline: int, xm
             # optional subelements
             for element_subelement in element_subelements:
                 if (element_subelement not in validation_rules_set["optional_subelements"]) and (element_subelement not in validation_rules_set["obligatory_subelements"]):
+                    if str(element_subelement).startswith("<cyfunction Comment"):
+                        logger.debug("Subelement validation: Ignoring comment function under parent element {}.".format(element_name))
+                        continue
                     message_id = "0005"
                     message_text = messages.get_message_by_id(message_id, message_lang).format(element_name, element_subelement)
                     validation_messages.append(message_text)

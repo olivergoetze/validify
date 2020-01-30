@@ -3,5 +3,6 @@
         <valid_optional_subelement/>
         <invalid_optional_subelement/>
         <obligatory_subelement/>
+        <!-- test comment -->
     </parent_element>
 </test_example>
