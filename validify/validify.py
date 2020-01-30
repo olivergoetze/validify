@@ -248,7 +248,9 @@ def validate(input_file: str, xmlns_def=None, validation_rules=None, message_lan
 
     try:
         xml_in = etree.parse(input_file)
+        xml_root_element = xml_in.getroot()
         xml_elements = xml_in.findall("//{*}*")
+        xml_elements = [xml_root_element] + xml_elements
         for xml_element in xml_elements:
             xml_element_sourceline = xml_element.sourceline  # get original source line before applying normalize-space
             normalize_space.parse_xml_content(xml_element)  # apply normalize-space so only actual character content is found
