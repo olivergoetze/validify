@@ -63,7 +63,8 @@ def assess_element_structure(element: etree.Element, element_sourceline: int, xm
                     for reference in validation_rule_condition["reference_elements"]:
                         reference_element = element
                         for step in range(reference["preceding_elements"]):
-                            reference_element = reference_element.getparent()
+                            if reference_element.getparent() is not None:
+                                reference_element = reference_element.getparent()
 
                         if reference_element.tag != reference["element_name"]:
                             condition_satisfied["reference_elements"] = False
@@ -139,13 +140,14 @@ def assess_element_structure(element: etree.Element, element_sourceline: int, xm
 
             # max occurence
             if validation_rules_set["max_occurence"] is not None:  # max occurence nur prüfen, wenn das Element nicht unbegrenzt auftreten kann
-                element_siblings = element.getparent().findall(element_name, namespaces=xmlns_def)
-                if len(element_siblings) > validation_rules_set["max_occurence"]:
-                    message_id = "0007"
-                    message_text = messages.get_message_by_id(message_id, message_lang).format(element_name, len(element_siblings), validation_rules_set["max_occurence"])
-                    validation_messages.append(message_text)
-                    validation_results.append(
-                        {"message_id": message_id, "message_text": message_text, "element_name": element_name, "element_local_name": element_local_name, "element_sourceline": element_sourceline})
+                if element.getparent() is not None:
+                    element_siblings = element.getparent().findall(element_name, namespaces=xmlns_def)
+                    if len(element_siblings) > validation_rules_set["max_occurence"]:
+                        message_id = "0007"
+                        message_text = messages.get_message_by_id(message_id, message_lang).format(element_name, len(element_siblings), validation_rules_set["max_occurence"])
+                        validation_messages.append(message_text)
+                        validation_results.append(
+                            {"message_id": message_id, "message_text": message_text, "element_name": element_name, "element_local_name": element_local_name, "element_sourceline": element_sourceline})
 
             # character content allowed
             if validation_rules_set["text_character_content_allowed"] is False:
