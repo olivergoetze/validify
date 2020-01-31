@@ -27,6 +27,21 @@ def log_message(message: str, level: str, log_to_console: bool):
         elif level == "error":
             logger.error(message)
 
+def get_element_path(element: etree.Element, local_name=True) -> str:
+    """Get the full path of an xml element by iterating through the ancestor elements."""
+    element_ancestors = list(element.iterancestors())
+    if local_name:
+        element_ancestor_tags = [etree.QName(element).localname for element in element_ancestors]
+    else:
+        element_ancestor_tags = [element.tag for element in element_ancestors]
+    element_path_string = "/".join(element_ancestor_tags)
+    if len(element_ancestor_tags) > 0:
+        element_path_string = "/{}/{}".format(element_path_string, element.tag)
+    else:
+        element_path_string = "/{}".format(element.tag)
+
+    return element_path_string
+
 def assess_element_structure(element: etree.Element, element_sourceline: int, xmlns_def: dict, validation_rules: dict, validation_messages: list, validation_results: list, message_lang: str) -> list:
     """Asssess the structure of an xml element, according to the provided validation rules.
 
@@ -38,6 +53,7 @@ def assess_element_structure(element: etree.Element, element_sourceline: int, xm
 
     element_name = element.tag
     element_local_name = etree.QName(element).localname
+    element_path = get_element_path(element)
     element_attributes = element.attrib
     element_subelements = [subelement.tag for subelement in element]
 
