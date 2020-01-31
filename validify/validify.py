@@ -32,16 +32,18 @@ def get_element_path(element: etree.Element, local_name=True) -> str:
 
     If parameter local_name=True, local element names (without namespaces) will be used in the result string.
     """
+    element_name = element.tag
     element_ancestors = list(element.iterancestors())
     if local_name:
+        element_name = etree.QName(element).localname
         element_ancestor_tags = [etree.QName(element).localname for element in element_ancestors]
     else:
         element_ancestor_tags = [element.tag for element in element_ancestors]
     element_path_string = "/".join(element_ancestor_tags)
     if len(element_ancestor_tags) > 0:
-        element_path_string = "/{}/{}".format(element_path_string, element.tag)
+        element_path_string = "/{}/{}".format(element_path_string, element_name)
     else:
-        element_path_string = "/{}".format(element.tag)
+        element_path_string = "/{}".format(element_name)
 
     return element_path_string
 
