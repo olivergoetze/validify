@@ -33,7 +33,7 @@ def get_element_path(element: etree.Element, local_name=True) -> str:
     If parameter local_name=True, local element names (without namespaces) will be used in the result string.
     """
     element_name = element.tag
-    element_ancestors = list(element.iterancestors())
+    element_ancestors = list(reversed(element.iterancestors()))
     if local_name:
         element_name = etree.QName(element).localname
         element_ancestor_tags = [etree.QName(element).localname for element in element_ancestors]

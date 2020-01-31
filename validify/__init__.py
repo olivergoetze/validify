@@ -3,6 +3,7 @@
 from .validify import (
   validate,
   assess_element_structure,
+  get_element_path,
 )
 
 from .helpers.messages import (
