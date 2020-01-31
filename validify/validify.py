@@ -28,7 +28,10 @@ def log_message(message: str, level: str, log_to_console: bool):
             logger.error(message)
 
 def get_element_path(element: etree.Element, local_name=True) -> str:
-    """Get the full path of an xml element by iterating through the ancestor elements."""
+    """Get the full path of an xml element by iterating through the ancestor elements.
+
+    If parameter local_name=True, local element names (without namespaces) will be used in the result string.
+    """
     element_ancestors = list(element.iterancestors())
     if local_name:
         element_ancestor_tags = [etree.QName(element).localname for element in element_ancestors]
@@ -104,7 +107,7 @@ def assess_element_structure(element: etree.Element, element_sourceline: int, xm
                     message_id = "0001"
                     message_text = messages.get_message_by_id(message_id, message_lang).format(element_name)
                     validation_messages.append(message_text)
-                    validation_results.append({"message_id": message_id, "message_text": message_text, "element_name": element_name, "element_local_name": element_local_name, "element_sourceline": element_sourceline})
+                    validation_results.append({"message_id": message_id, "message_text": message_text, "element_name": element_name, "element_local_name": element_local_name, "element_sourceline": element_sourceline, "element_path": element_path})
 
             # element content optional
             if not validation_rules_set["element_content_optional"]:
@@ -113,7 +116,7 @@ def assess_element_structure(element: etree.Element, element_sourceline: int, xm
                     message_text = messages.get_message_by_id(message_id, message_lang).format(element_name)
                     validation_messages.append(message_text)
                     validation_results.append(
-                        {"message_id": message_id, "message_text": message_text, "element_name": element_name, "element_local_name": element_local_name, "element_sourceline": element_sourceline})
+                        {"message_id": message_id, "message_text": message_text, "element_name": element_name, "element_local_name": element_local_name, "element_sourceline": element_sourceline, "element_path": element_path})
 
             # optional attributes
             for element_attribute in element_attributes:
@@ -122,7 +125,7 @@ def assess_element_structure(element: etree.Element, element_sourceline: int, xm
                     message_text = messages.get_message_by_id(message_id, message_lang).format(element_name, element_attribute)
                     validation_messages.append(message_text)
                     validation_results.append(
-                        {"message_id": message_id, "message_text": message_text, "element_name": element_name, "element_local_name": element_local_name, "element_sourceline": element_sourceline})
+                        {"message_id": message_id, "message_text": message_text, "element_name": element_name, "element_local_name": element_local_name, "element_sourceline": element_sourceline, "element_path": element_path})
 
             # obligatory attributes
             for obligatory_attribute in validation_rules_set["obligatory_attributes"]:
@@ -131,7 +134,7 @@ def assess_element_structure(element: etree.Element, element_sourceline: int, xm
                     message_text = messages.get_message_by_id(message_id, message_lang).format(element_name, obligatory_attribute)
                     validation_messages.append(message_text)
                     validation_results.append(
-                        {"message_id": message_id, "message_text": message_text, "element_name": element_name, "element_local_name": element_local_name, "element_sourceline": element_sourceline})
+                        {"message_id": message_id, "message_text": message_text, "element_name": element_name, "element_local_name": element_local_name, "element_sourceline": element_sourceline, "element_path": element_path})
 
             # optional subelements
             for element_subelement in element_subelements:
@@ -143,7 +146,7 @@ def assess_element_structure(element: etree.Element, element_sourceline: int, xm
                     message_text = messages.get_message_by_id(message_id, message_lang).format(element_name, element_subelement)
                     validation_messages.append(message_text)
                     validation_results.append(
-                        {"message_id": message_id, "message_text": message_text, "element_name": element_name, "element_local_name": element_local_name, "element_sourceline": element_sourceline})
+                        {"message_id": message_id, "message_text": message_text, "element_name": element_name, "element_local_name": element_local_name, "element_sourceline": element_sourceline, "element_path": element_path})
 
             # obligatory subelements
             for obligatory_subelement in validation_rules_set["obligatory_subelements"]:
@@ -152,7 +155,7 @@ def assess_element_structure(element: etree.Element, element_sourceline: int, xm
                     message_text = messages.get_message_by_id(message_id, message_lang).format(element_name, obligatory_subelement)
                     validation_messages.append(message_text)
                     validation_results.append(
-                        {"message_id": message_id, "message_text": message_text, "element_name": element_name, "element_local_name": element_local_name, "element_sourceline": element_sourceline})
+                        {"message_id": message_id, "message_text": message_text, "element_name": element_name, "element_local_name": element_local_name, "element_sourceline": element_sourceline, "element_path": element_path})
 
             # max occurence
             if validation_rules_set["max_occurence"] is not None:  # max occurence nur prüfen, wenn das Element nicht unbegrenzt auftreten kann
@@ -163,7 +166,7 @@ def assess_element_structure(element: etree.Element, element_sourceline: int, xm
                         message_text = messages.get_message_by_id(message_id, message_lang).format(element_name, len(element_siblings), validation_rules_set["max_occurence"])
                         validation_messages.append(message_text)
                         validation_results.append(
-                            {"message_id": message_id, "message_text": message_text, "element_name": element_name, "element_local_name": element_local_name, "element_sourceline": element_sourceline})
+                            {"message_id": message_id, "message_text": message_text, "element_name": element_name, "element_local_name": element_local_name, "element_sourceline": element_sourceline, "element_path": element_path})
 
             # character content allowed
             if validation_rules_set["text_character_content_allowed"] is False:
@@ -173,7 +176,7 @@ def assess_element_structure(element: etree.Element, element_sourceline: int, xm
                         message_text = messages.get_message_by_id(message_id, message_lang).format(element_name)
                         validation_messages.append(message_text)
                         validation_results.append(
-                            {"message_id": message_id, "message_text": message_text, "element_name": element_name, "element_local_name": element_local_name, "element_sourceline": element_sourceline})
+                            {"message_id": message_id, "message_text": message_text, "element_name": element_name, "element_local_name": element_local_name, "element_sourceline": element_sourceline, "element_path": element_path})
             if validation_rules_set["tail_character_content_allowed"] is False:
                 if element.tail is not None:
                     if element.tail != "":
@@ -181,7 +184,7 @@ def assess_element_structure(element: etree.Element, element_sourceline: int, xm
                         message_text = messages.get_message_by_id(message_id, message_lang).format(element_name)
                         validation_messages.append(message_text)
                         validation_results.append(
-                            {"message_id": message_id, "message_text": message_text, "element_name": element_name, "element_local_name": element_local_name, "element_sourceline": element_sourceline})
+                            {"message_id": message_id, "message_text": message_text, "element_name": element_name, "element_local_name": element_local_name, "element_sourceline": element_sourceline, "element_path": element_path})
 
             # allowed values (xs:enumeration)
             if len(validation_rules_set["allowed_values"]) > 0:
@@ -190,7 +193,7 @@ def assess_element_structure(element: etree.Element, element_sourceline: int, xm
                         message_id = "0010"
                         message_text = messages.get_message_by_id(message_id, message_lang).format(element_name, element.text, ", ".join(validation_rules_set["allowed_values"]))
                         validation_messages.append(message_text)
-                        validation_results.append({"message_id": message_id, "message_text": message_text, "element_name": element_name, "element_local_name": element_local_name, "element_sourceline": element_sourceline})
+                        validation_results.append({"message_id": message_id, "message_text": message_text, "element_name": element_name, "element_local_name": element_local_name, "element_sourceline": element_sourceline, "element_path": element_path})
 
             # allowed patterns (xs:pattern)
             if len(validation_rules_set["allowed_patterns"]) > 0:
@@ -206,7 +209,7 @@ def assess_element_structure(element: etree.Element, element_sourceline: int, xm
                     message_id = "0011"
                     message_text = messages.get_message_by_id(message_id, message_lang).format(element_name, element.text, ", ".join(validation_rules_set["allowed_patterns"]))
                     validation_messages.append(message_text)
-                    validation_results.append({"message_id": message_id, "message_text": message_text, "element_name": element_name, "element_local_name": element_local_name, "element_sourceline": element_sourceline})
+                    validation_results.append({"message_id": message_id, "message_text": message_text, "element_name": element_name, "element_local_name": element_local_name, "element_sourceline": element_sourceline, "element_path": element_path})
 
             # Attribute definition
             for attribute_definition in validation_rules_set["attribute_def"]:
@@ -217,7 +220,7 @@ def assess_element_structure(element: etree.Element, element_sourceline: int, xm
                             message_id = "0012"
                             message_text = messages.get_message_by_id(message_id, message_lang).format(element_name, attribute_definition["attribute_name"], element.attrib[attribute_definition["attribute_name"]], ", ".join(attribute_definition["allowed_values"]))
                             validation_messages.append(message_text)
-                            validation_results.append({"message_id": message_id, "message_text": message_text, "element_name": element_name, "element_local_name": element_local_name, "element_sourceline": element_sourceline})
+                            validation_results.append({"message_id": message_id, "message_text": message_text, "element_name": element_name, "element_local_name": element_local_name, "element_sourceline": element_sourceline, "element_path": element_path})
 
                     # allowed patterns (xs:pattern)
                     if len(attribute_definition["allowed_patterns"]) > 0:
@@ -232,7 +235,7 @@ def assess_element_structure(element: etree.Element, element_sourceline: int, xm
                             message_id = "0013"
                             message_text = messages.get_message_by_id(message_id, message_lang).format(element_name, attribute_definition["attribute_name"], element.attrib[attribute_definition["attribute_name"]], ", ".join(attribute_definition["allowed_patterns"]))
                             validation_messages.append(message_text)
-                            validation_results.append({"message_id": message_id, "message_text": message_text, "element_name": element_name, "element_local_name": element_local_name, "element_sourceline": element_sourceline})
+                            validation_results.append({"message_id": message_id, "message_text": message_text, "element_name": element_name, "element_local_name": element_local_name, "element_sourceline": element_sourceline, "element_path": element_path})
 
 
 
