@@ -278,8 +278,13 @@ def validate(input_file: str, xmlns_def=None, validation_rules=None, message_lan
             xml_element_sourceline = xml_element.sourceline  # get original source line before applying normalize-space
             normalize_space.parse_xml_content(xml_element)  # apply normalize-space so only actual character content is found
             validation_results = assess_element_structure(xml_element, xml_element_sourceline, xmlns_def, validation_rules, validation_messages, validation_results, message_lang)
-    except etree.XMLSyntaxError:
-        log_message("Input file {} is not a well-formed XML document.".format(input_file), "error", log_to_console)
+    except etree.XMLSyntaxError as e:
+        message_id = "e0001"
+        message_text = messages.get_message_by_id(message_id, message_lang).format(input_file, e)
+        validation_messages.append(message_text)
+        validation_results.append({"message_id": message_id, "message_text": message_text, "element_name": None,
+                                   "element_local_name": None, "element_sourceline": None,
+                                   "element_path": None})
 
     # Aggregate and output validation messages
     if len(validation_messages) > 0:
