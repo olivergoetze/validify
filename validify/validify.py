@@ -28,6 +28,8 @@ def log_message(message: str, level: str, log_to_console: bool):
             logger.error(message)
 
 def assess_root_element(root_element: etree.Element, validation_rules: dict, validation_messages: list, validation_results: list, message_lang: str):
+    """Evaluate the document's root element and check if it is the correct element in the expected namespace."""
+
     if "$root_element" in validation_rules:
         for validation_rules_set in validation_rules["$root_element"]:
             root_element_name = root_element.tag
@@ -61,6 +63,7 @@ def get_element_path(element: etree.Element, local_name=True) -> str:
 
     If parameter local_name=True, local element names (without namespaces) will be used in the result string.
     """
+
     element_name = element.tag
     element_ancestors = list(element.iterancestors())
     if local_name:
