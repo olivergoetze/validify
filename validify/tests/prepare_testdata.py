@@ -200,4 +200,14 @@ def compile_test_rules() -> dict:
          "allowed_patterns": ["^test-\\d{4}$", "^test-\\d{3}$"]})
     validation_rules["pattern_test"] = rulesets_pattern_test
 
+    rulesets_root_element = []
+    ruleset = {}
+
+    ruleset["element_name"] = "test_example"
+    ruleset["element_local_name"] = "test_example"
+
+    rulesets_root_element.append(ruleset)
+    validation_rules["$root_element"] = rulesets_root_element
+
+
     return validation_rules

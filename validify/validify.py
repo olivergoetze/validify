@@ -27,6 +27,35 @@ def log_message(message: str, level: str, log_to_console: bool):
         elif level == "error":
             logger.error(message)
 
+def assess_root_element(root_element: etree.Element, validation_rules: dict, validation_messages: list, validation_results: list, message_lang: str):
+    if "$root_element" in validation_rules:
+        for validation_rules_set in validation_rules["$root_element"]:
+            root_element_name = root_element.tag
+            root_element_local_name = etree.QName(root_element).localname
+            root_element_sourceline = root_element.sourceline
+
+            expected_root_element_name = validation_rules_set["element_name"]
+            expected_root_element_local_name = validation_rules_set["element_local_name"]
+
+            if root_element_name != expected_root_element_name:
+                if root_element_local_name == expected_root_element_local_name:
+                    message_id = "s0002"
+                    message_text = messages.get_message_by_id(message_id, message_lang).format(root_element_name,
+                                                                                               expected_root_element_name)
+                    validation_messages.append(message_text)
+                    validation_results.append(
+                        {"message_id": message_id, "message_text": message_text, "element_name": root_element_name,
+                         "element_local_name": root_element_local_name, "element_sourceline": root_element_sourceline,
+                         "element_path": "/{}".format(root_element_name)})
+                else:
+                    message_id = "s0001"
+                    message_text = messages.get_message_by_id(message_id, message_lang).format(root_element_name, expected_root_element_name)
+                    validation_messages.append(message_text)
+                    validation_results.append({"message_id": message_id, "message_text": message_text, "element_name": root_element_name,
+                                               "element_local_name": root_element_local_name, "element_sourceline": root_element_sourceline,
+                                               "element_path": "/{}".format(root_element_name)})
+
+
 def get_element_path(element: etree.Element, local_name=True) -> str:
     """Get the full path of an xml element by iterating through the ancestor elements.
 
@@ -272,6 +301,8 @@ def validate(input_file: str, xmlns_def=None, validation_rules=None, message_lan
     try:
         xml_in = etree.parse(input_file)
         xml_root_element = xml_in.getroot()
+        assess_root_element(xml_root_element, validation_rules, validation_messages, validation_results, message_lang)
+
         xml_elements = xml_in.findall("//{*}*")
         xml_elements = [xml_root_element] + xml_elements
         for xml_element in xml_elements:

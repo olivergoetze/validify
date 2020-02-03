@@ -155,3 +155,21 @@ class TestElementStructureAsssessment:
         assert len(validation_result) == 1
         if len(validation_result) == 1:
             assert validation_result[0]["message_id"] == "e0001"
+
+    def test_root_element_evaluation(self):
+        """Parse an xml document, evaluate the root element and ensure that the correct validation message is applied."""
+
+        validation_result = validify.validate("validify/tests/test_root_element_evaluation.xml",
+                                              validation_rules=compile_test_rules(), log_to_console=False)
+        assert len(validation_result) == 1
+        if len(validation_result) == 1:
+            assert validation_result[0]["message_id"] == "s0001"
+
+    def test_root_element_namespace_evaluation(self):
+        """Parse an xml document, evaluate the root element and ensure that the correct validation message is applied."""
+
+        validation_result = validify.validate("validify/tests/test_root_element_namespace_evaluation.xml",
+                                              validation_rules=compile_test_rules(), log_to_console=False)
+        assert len(validation_result) == 1
+        if len(validation_result) == 1:
+            assert validation_result[0]["message_id"] == "s0002"

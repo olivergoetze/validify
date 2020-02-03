@@ -33,7 +33,7 @@ def get_message_by_id(message_id: str, lang: str="de") -> str:
         elif message_id == "s0001":
             message_str = "Das Wurzelelement {} entspricht nicht dem erwarteten Element {}."
         elif message_id == "s0002":
-            message_str = "Das Wurzelelement {} befindet sich nicht im erwarteten Namespace {}."
+            message_str = "Das Wurzelelement {} befindet sich nicht im erwarteten Namespace. Erwarteter Namespace: {}."
         else:
             message_str = ""
     else:
@@ -68,7 +68,7 @@ def get_message_by_id(message_id: str, lang: str="de") -> str:
         elif message_id == "s0001":
             message_str = "Root element {} is not equal to expected element {}."
         elif message_id == "s0002":
-            message_str = "Root element {} is not in the expected namespace {}."
+            message_str = "Root element {} is not in the expected namespace. Expected namespace: {}."
         else:
             message_str = ""
 
