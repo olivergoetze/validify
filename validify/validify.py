@@ -278,7 +278,7 @@ def assess_element_structure(element: etree.Element, element_sourceline: int, xm
 
 
 
-def validate(input_file: str, xmlns_def=None, validation_rules=None, message_lang=None, log_to_console=True):
+def validate(input_file=None, input_elementtree=None, xmlns_def=None, validation_rules=None, message_lang=None, log_to_console=True):
     """Validate a given xml file according to the supplied validation rules and return validation messages as a dictionary.
 
     All elements in the xml file will be processed.
@@ -301,28 +301,34 @@ def validate(input_file: str, xmlns_def=None, validation_rules=None, message_lan
     validation_messages = []
     validation_results = []
 
-    try:
-        xml_in = etree.parse(input_file)
-        xml_root_element = xml_in.getroot()
-        assess_root_element(xml_root_element, validation_rules, validation_messages, validation_results, message_lang)
+    if input_file is not None:
+        try:
+            xml_in = etree.parse(input_file)
+            xml_root_element = xml_in.getroot()
+            assess_root_element(xml_root_element, validation_rules, validation_messages, validation_results, message_lang)
 
-        xml_elements = xml_in.findall("//{*}*")
-        xml_elements = [xml_root_element] + xml_elements
-        for xml_element in xml_elements:
-            xml_element_sourceline = xml_element.sourceline  # get original source line before applying normalize-space
-            normalize_space.parse_xml_content(xml_element)  # apply normalize-space so only actual character content is found
-            validation_results = assess_element_structure(xml_element, xml_element_sourceline, xmlns_def, validation_rules, validation_messages, validation_results, message_lang)
-    except etree.XMLSyntaxError as e:
-        message_id = "e0001"
-        message_text = messages.get_message_by_id(message_id, message_lang).format(input_file, e)
-        validation_messages.append(message_text)
-        validation_results.append({"message_id": message_id, "message_text": message_text, "element_name": None,
-                                   "element_local_name": None, "element_sourceline": None,
-                                   "element_path": None})
+            xml_elements = xml_in.findall("//{*}*")
+            xml_elements = [xml_root_element] + xml_elements
+            for xml_element in xml_elements:
+                xml_element_sourceline = xml_element.sourceline  # get original source line before applying normalize-space
+                normalize_space.parse_xml_content(xml_element)  # apply normalize-space so only actual character content is found
+                validation_results = assess_element_structure(xml_element, xml_element_sourceline, xmlns_def, validation_rules, validation_messages, validation_results, message_lang)
+        except etree.XMLSyntaxError as e:
+            message_id = "e0001"
+            message_text = messages.get_message_by_id(message_id, message_lang).format(input_file, e)
+            validation_messages.append(message_text)
+            validation_results.append({"message_id": message_id, "message_text": message_text, "element_name": None,
+                                       "element_local_name": None, "element_sourceline": None,
+                                       "element_path": None})
+
+    elif input_elementtree is not None:
+        # TODO: Verarbeitung bei Übergabe eines etree-Objekts
+        pass
 
     # Aggregate and output validation messages
     if len(validation_messages) > 0:
-        log_message("Validation results for file '{}':".format(input_file), "info", log_to_console)
+        if input_file is not None:  # log only when the input is a file and not an ElementTree.
+            log_message("Validation results for file '{}':".format(input_file), "info", log_to_console)
         aggregated_validation_messages = collections.Counter(validation_messages)
         for validation_message in aggregated_validation_messages:
             log_message("{} ({} occurences)".format(validation_message, aggregated_validation_messages[validation_message]), "info", log_to_console)
