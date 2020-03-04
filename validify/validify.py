@@ -282,6 +282,7 @@ def validate(input_file=None, input_elementtree=None, xmlns_def=None, validation
     """Validate a given xml file according to the supplied validation rules and return validation messages as a dictionary.
 
     All elements in the xml file will be processed.
+    Since version 0.0.11, an etree.ElementTree object (parameter 'input_elementtree') can also be passed, instead of an input file string.
     For a documentation of parameters, see https://github.com/olivergoetze/validify.
     """
 
@@ -301,9 +302,12 @@ def validate(input_file=None, input_elementtree=None, xmlns_def=None, validation
     validation_messages = []
     validation_results = []
 
-    if input_file is not None:
+    if input_file is not None or input_elementtree is not None:
         try:
-            xml_in = etree.parse(input_file)
+            if input_file is not None:
+                xml_in = etree.parse(input_file)
+            else:
+                xml_in = input_elementtree
             xml_root_element = xml_in.getroot()
             assess_root_element(xml_root_element, validation_rules, validation_messages, validation_results, message_lang)
 
@@ -320,10 +324,14 @@ def validate(input_file=None, input_elementtree=None, xmlns_def=None, validation
             validation_results.append({"message_id": message_id, "message_text": message_text, "element_name": None,
                                        "element_local_name": None, "element_sourceline": None,
                                        "element_path": None})
+        except AttributeError as e:
+            message_id = "e0002"
+            message_text = messages.get_message_by_id(message_id, message_lang).format(e)
+            validation_messages.append(message_text)
+            validation_results.append({"message_id": message_id, "message_text": message_text, "element_name": None,
+                                       "element_local_name": None, "element_sourceline": None,
+                                       "element_path": None})
 
-    elif input_elementtree is not None:
-        # TODO: Verarbeitung bei Übergabe eines etree-Objekts
-        pass
 
     # Aggregate and output validation messages
     if len(validation_messages) > 0:

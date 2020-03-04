@@ -30,6 +30,8 @@ def get_message_by_id(message_id: str, lang: str="de") -> str:
             message_str = "Element {}, Attribut {}: Tatsächlicher Attributwert entspricht nicht den zulässigen Patterns: '{}' != '{}'."
         elif message_id == "e0001":
             message_str = "Die Datei {} ist kein wohlgeformtes XML-Dokument. Fehlermeldung: {}"
+        elif message_id == "e0002":
+            message_str = "Der als Parameter 'input_elementtree' übergebene Wert ist kein gültiges ElementTree-Objekt. Fehlermeldung: {}"
         elif message_id == "s0001":
             message_str = "Das Wurzelelement {} entspricht nicht dem erwarteten Element {}."
         elif message_id == "s0002":
@@ -65,6 +67,8 @@ def get_message_by_id(message_id: str, lang: str="de") -> str:
             message_str = "Element {}, attribute {}: attribute value not valid according to allowed patterns: '{}' != '{}'"
         elif message_id == "e0001":
             message_str = "Input file {} is not well-formed. Error message: {}"
+        elif message_id == "e0002":
+            message_str = "Value passed as parameter 'input_elementtree' is not a valid ElementTree object. Error message: {}"
         elif message_id == "s0001":
             message_str = "Root element {} is not equal to expected element {}."
         elif message_id == "s0002":

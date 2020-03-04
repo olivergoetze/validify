@@ -1,3 +1,4 @@
+from lxml import etree
 import validify
 from validify.tests.prepare_testdata import compile_test_rules
 
@@ -173,3 +174,30 @@ class TestElementStructureAsssessment:
         assert len(validation_result) == 1
         if len(validation_result) == 1:
             assert validation_result[0]["message_id"] == "s0002"
+
+    def test_non_valid_elementtree_input(self):
+        """Pass a non-valid value (string) as ElementTree input parameter. Ensure that the resulting exception is handled."""
+
+        validation_result = validify.validate(input_elementtree="1234", validation_rules=compile_test_rules(), log_to_console=False)
+
+        assert len(validation_result) == 1
+        if len(validation_result) == 1:
+            assert validation_result[0]["message_id"] == "e0002"
+
+    def test_elementtree_input(self):
+        """Parse an ElementTree object, and ensure that rules are correctly applied to the document elements.
+
+        See ./test_valid_elementtree_input.xml for an XML representation of the ElementTree example object.
+        """
+
+        xml_root_element = etree.Element("test_example")
+        xml_test_element = etree.SubElement(xml_root_element, "value_test")
+        xml_test_element.text = "invalid value"
+        xml_tree = etree.ElementTree(xml_root_element)
+
+        validation_result = validify.validate(input_elementtree=xml_tree, validation_rules=compile_test_rules(),
+                                              log_to_console=False)
+
+        assert len(validation_result) == 1
+        if len(validation_result) == 1:
+            assert validation_result[0]["message_id"] == "0010"
