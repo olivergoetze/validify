@@ -20,15 +20,18 @@ Dependencies will be automatically fetched by pip.
 ### Basic usage
 ```python
 import validify
-validation_result = validify.validate(input_file="validify/test.xml", xmlns_def=None, validation_rules=None, message_lang=None, log_to_console=True)
+validation_result = validify.validate(input_file="validify/test.xml", input_elementtree=None, xmlns_def=None, validation_rules=None, message_lang=None, log_to_console=True)
 ```
 
 #### Parameters
-- input_file (required): path to xml file which should be validated.
+- input_file (default: `None`): path to xml file which should be validated.
+- input_elementtree (default: `None`): an etree.ElementTree object (parameter 'input_elementtree') can also be passed, instead of an input file string.
 - xmlns_def (default: `None`): a namespace definition can be supplied as a python dictionary object (`{None: "default_namespace", "namespace_prefix": "another_namespace"}}`). 
 - validation_rules (default: `None`): a python dictionary object containing the validation rules (see "Defining validation rules" below for an example.). An example rules dictionary is used if no value is supplied here.
 - message_lang (default: `de`): language for validation message strings. Supported values are `en` and `de`.
 - log_to_console (default: `True`): if `True`, validation and status messages are logged to console. If false, validation messages are only added to the results dict returned by `validfy`. 
+
+One of the paramaters `input_file` or `input_elementtree` should be passed for the library to produce validation results.
 
 #### Defining validation rules
 Validation rules are defined in a dictionary object (JSON-like structure):
