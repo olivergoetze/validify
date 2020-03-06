@@ -321,16 +321,16 @@ def validate(input_file=None, input_elementtree=None, xmlns_def=None, validation
             message_id = "e0001"
             message_text = messages.get_message_by_id(message_id, message_lang).format(input_file, e)
             validation_messages.append(message_text)
-            validation_results.append({"message_id": message_id, "message_text": message_text, "element_name": None,
-                                       "element_local_name": None, "element_sourceline": None,
-                                       "element_path": None})
+            validation_results.append({"message_id": message_id, "message_text": message_text, "element_name": "",
+                                       "element_local_name": "", "element_sourceline": "",
+                                       "element_path": ""})
         except AttributeError as e:
             message_id = "e0002"
             message_text = messages.get_message_by_id(message_id, message_lang).format(e)
             validation_messages.append(message_text)
-            validation_results.append({"message_id": message_id, "message_text": message_text, "element_name": None,
-                                       "element_local_name": None, "element_sourceline": None,
-                                       "element_path": None})
+            validation_results.append({"message_id": message_id, "message_text": message_text, "element_name": "",
+                                       "element_local_name": "", "element_sourceline": "",
+                                       "element_path": ""})
 
 
     # Aggregate and output validation messages
