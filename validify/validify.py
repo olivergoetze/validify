@@ -4,12 +4,16 @@ from lxml import etree
 from loguru import logger
 import collections
 import re
+import sys
 
 from validify.helpers.cleanup_compare_strings import get_compare_value
 from validify.helpers import normalize_space
 from validify.helpers import messages
 from validify.tests.prepare_testdata import compile_test_rules
 
+# Configure logging
+logger.remove()
+logger.add(sys.stderr, level="INFO")
 
 def log_message(message: str, level: str, log_to_console: bool):
     """Deliver log message to logger if console logging is enabled."""
