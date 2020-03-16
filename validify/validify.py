@@ -1,9 +1,7 @@
 """Validify - rule-based validator for assessing the structure of an xml tree."""
 
 from lxml import etree
-import logging
-import logzero
-from logzero import logger
+from loguru import logger
 import collections
 import re
 
@@ -12,7 +10,6 @@ from validify.helpers import normalize_space
 from validify.helpers import messages
 from validify.tests.prepare_testdata import compile_test_rules
 
-logzero.loglevel(logging.INFO)
 
 def log_message(message: str, level: str, log_to_console: bool):
     """Deliver log message to logger if console logging is enabled."""
@@ -23,7 +20,7 @@ def log_message(message: str, level: str, log_to_console: bool):
         elif level == "info":
             logger.info(message)
         elif level == "warn":
-            logger.warn(message)
+            logger.warning(message)
         elif level == "error":
             logger.error(message)
 
@@ -79,7 +76,7 @@ def get_element_path(element: etree.Element, local_name=True) -> str:
 
     return element_path_string
 
-def assess_element_structure(element: etree.Element, element_sourceline: int, xmlns_def: dict, validation_rules: dict, validation_messages: list, validation_results: list, message_lang: str) -> list:
+def assess_element_structure(element: etree.Element, element_sourceline: int, xmlns_def: dict, validation_rules: dict, validation_messages: list, validation_results: list, message_lang: str, log_to_console: bool) -> list:
     """Asssess the structure of an xml element, according to the provided validation rules.
 
     Takes an etree.Element, namespace definition and validation rules.
@@ -131,7 +128,7 @@ def assess_element_structure(element: etree.Element, element_sourceline: int, xm
 
             not_satisfied = [condition_key for condition_key, condition_value in condition_satisfied.items() if condition_value is False]
             if len(not_satisfied) > 0:
-                logger.debug("Validation ruleset for element {} not applied because the following rule conditions are not satisfied: {}.".format(element_name, ", ".join(not_satisfied)))
+                log_message("Validation ruleset for element {} not applied because the following rule conditions are not satisfied: {}.".format(element_name, ", ".join(not_satisfied)), "debug", log_to_console)
                 continue
 
 
@@ -174,7 +171,7 @@ def assess_element_structure(element: etree.Element, element_sourceline: int, xm
             for element_subelement in element_subelements:
                 if (element_subelement not in validation_rules_set["optional_subelements"]) and (element_subelement not in validation_rules_set["obligatory_subelements"]):
                     if str(element_subelement).startswith("<cyfunction Comment"):
-                        logger.debug("Subelement validation: Ignoring comment function under parent element {}.".format(element_name))
+                        log_message("Subelement validation: Ignoring comment function under parent element {}.".format(element_name), "debug", log_to_console)
                         continue
                     message_id = "0005"
                     message_text = messages.get_message_by_id(message_id, message_lang).format(element_name, element_subelement)
@@ -316,7 +313,7 @@ def validate(input_file=None, input_elementtree=None, xmlns_def=None, validation
             for xml_element in xml_elements:
                 xml_element_sourceline = xml_element.sourceline  # get original source line before applying normalize-space
                 normalize_space.parse_xml_content(xml_element)  # apply normalize-space so only actual character content is found
-                validation_results = assess_element_structure(xml_element, xml_element_sourceline, xmlns_def, validation_rules, validation_messages, validation_results, message_lang)
+                validation_results = assess_element_structure(xml_element, xml_element_sourceline, xmlns_def, validation_rules, validation_messages, validation_results, message_lang, log_to_console)
         except etree.XMLSyntaxError as e:
             message_id = "e0001"
             message_text = messages.get_message_by_id(message_id, message_lang).format(input_file, e)

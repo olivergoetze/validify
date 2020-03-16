@@ -7,7 +7,7 @@
 ### Requirements
 - Python 3.5+
 - [lxml](https://pypi.org/project/lxml/)
-- [logzero](https://pypi.org/project/logzero/)
+- [loguru](https://pypi.org/project/loguru/)
 
 ### Installation
 The `validify` module can be found on [PyPI](https://pypi.org/project/validify/).
